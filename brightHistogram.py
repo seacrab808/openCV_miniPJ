@@ -20,6 +20,11 @@ if isColor:
     # 더하는 값은 튜플로 입력
     dst1 = cv2.add(src, (100, 100, 100))
     
+cv2.imshow('src', src)
+cv2.imshow('dst', dst1)
 plt.plot(hist1)
 plt.plot(hist2)
 plt.show()
+cv2.waitKey()
+cv2.destroyAllWindows()
+
