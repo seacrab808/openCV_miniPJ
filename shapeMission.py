@@ -40,20 +40,28 @@ while True:
         # 저장된 이미지 불러오기
         saved_img = cv2.imread('output_image.jpg')
 
-        # 리사이징할 크기 설정
-        new_size = (256, 256)
+        # 원본 이미지 크기 출력
+        original_size = saved_img.shape[:2]
+        print(f"Original size: {original_size}")
 
-        # cv2.INTER_AREA 보간법을 사용한 리사이징
+        # 리사이징할 크기 설정 (2배 크기로 설정)
+        new_size = (saved_img.shape[1] * 2, saved_img.shape[0] * 2)
+
+        # 2배 크기로 보간 없이 단순 리사이징 (화질 깨짐 예상)
+        resized_no_interpolation = cv2.resize(saved_img, new_size, interpolation=cv2.INTER_NEAREST)
+
+        # cv2.INTER_AREA 보간법을 사용한 리사이징 (저화질 이미지를 줄일 때 적합)
         resized_area = cv2.resize(saved_img, new_size, interpolation=cv2.INTER_AREA)
 
-        # cv2.INTER_LINEAR 보간법을 사용한 리사이징
+        # cv2.INTER_LINEAR 보간법을 사용한 리사이징 (기본적인 보간법, 빠르고 일반적인 품질)
         resized_linear = cv2.resize(saved_img, new_size, interpolation=cv2.INTER_LINEAR)
 
-        # cv2.INTER_CUBIC 보간법을 사용한 리사이징
+        # cv2.INTER_CUBIC 보간법을 사용한 리사이징 (고품질 보간, 하지만 속도가 느림)
         resized_cubic = cv2.resize(saved_img, new_size, interpolation=cv2.INTER_CUBIC)
 
         # 원본 이미지와 리사이징된 이미지들 비교를 위해 창에 출력
-        cv2.imshow('original', saved_img)
+        cv2.imshow('Original', saved_img)
+        cv2.imshow('No Interpolation (Pixelated)', resized_no_interpolation)
         cv2.imshow('INTER_AREA', resized_area)
         cv2.imshow('INTER_LINEAR', resized_linear)
         cv2.imshow('INTER_CUBIC', resized_cubic)
