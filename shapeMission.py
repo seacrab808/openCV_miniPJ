@@ -36,6 +36,28 @@ while True:
     if key == ord('s'):
         cv2.imwrite('output_image.jpg', img)
         print("이미지를 저장했습니다.")
+        
+        # 저장된 이미지 불러오기
+        saved_img = cv2.imread('output_image.jpg')
+
+        # 리사이징할 크기 설정
+        new_size = (256, 256)
+
+        # cv2.INTER_AREA 보간법을 사용한 리사이징
+        resized_area = cv2.resize(saved_img, new_size, interpolation=cv2.INTER_AREA)
+
+        # cv2.INTER_LINEAR 보간법을 사용한 리사이징
+        resized_linear = cv2.resize(saved_img, new_size, interpolation=cv2.INTER_LINEAR)
+
+        # cv2.INTER_CUBIC 보간법을 사용한 리사이징
+        resized_cubic = cv2.resize(saved_img, new_size, interpolation=cv2.INTER_CUBIC)
+
+        # 원본 이미지와 리사이징된 이미지들 비교를 위해 창에 출력
+        cv2.imshow('original', saved_img)
+        cv2.imshow('INTER_AREA', resized_area)
+        cv2.imshow('INTER_LINEAR', resized_linear)
+        cv2.imshow('INTER_CUBIC', resized_cubic)
+        
     elif key == 27:  # ESC 키를 누르면 종료
         break
 
